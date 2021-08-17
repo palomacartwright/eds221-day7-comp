@@ -1,0 +1,91 @@
+---
+title: "Dates and Times Practice"
+author: "Paloma Cartwright"
+date: "17/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+```
+
+## Play around with functions in lubridate 
+
+```{r}
+# Month Day Year 
+my_date <- "03-15-1998"
+
+my_date_new <- mdy(my_date)
+
+my_date_2 <- "11/7/2003"
+
+my_date_new_2 <- mdy(my_date_2)
+
+```
+
+## Try converting the following to dates 
+
+```{r}
+ex_3 <- "4/6/2005"
+ex_4 <- "20100806"
+ex_5 <- "12-Jun-1974"
+ex_6 <- "Apr 15 2000"
+
+ex_3_n <- mdy(ex_3)
+ex_4_n <- ymd(ex_4)
+ex_5_n <- dmy(ex_5)
+ex_6_n <- mdy(ex_6)
+
+ex_7 <- c("4/6/2005", "April 15th 2005")
+ex_7_n <- mdy(ex_7)
+
+```
+
+## Working with time 
+
+```{r}
+time <- "2020-08-12 11:18"
+
+ex_5 <- ymd_hm(time)
+class(ex_5)
+
+time_australia <- 
+  with_tz(ex_5, "australia/sydney")
+
+
+# Create a date time 
+# Convert it to time in Sydney Australia 
+
+my_birth <- "Apr 15 2000 12:20"
+
+my_birth_standard <- mdy_hm(my_birth)
+my_birth_australia <- with_tz(my_birth_standard, "Australia/Sydney")
+my_birth_australia
+```
+
+```{r}
+
+my_bday <- mdy("April 15 2000")
+
+wday(my_bday, label = TRUE)
+```
+
+```{r}
+
+urchin_counts <- tribble(
+  ~date, ~species, ~size_mm, 
+  "10/3/2020", "purple", 55, 
+  "10/4/2020", "red", 48,
+  "11/17/2020", "red", 67
+)
+
+urchin_counts_ymd <- urchin_counts %>% 
+  mutate(date = mdy(date)) %>% 
+  mutate(year = year(date),
+         month = month(date), 
+         day = day(date))
+
+```
+
